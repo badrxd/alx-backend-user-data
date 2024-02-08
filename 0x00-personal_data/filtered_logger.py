@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''Regex-ing'''
-from typing import List
+from typing import List, Match, Optional
 import re
 import logging
 
@@ -24,9 +24,11 @@ class RedactingFormatter(logging.Formatter):
 
     def __init__(self, fields: List[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
-        self.fields = fields
+        self._fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        ''' redact the message of LogRecord instance
-        '''
-        pass
+        '''filter the massage that was sent in the record'''
+        msg = filter_datum(self._fields, self.REDACTION,
+                           record.msg, self.SEPARATOR)
+        record.msg = msg
+        return super(RedactingFormatter, self).format(record)
