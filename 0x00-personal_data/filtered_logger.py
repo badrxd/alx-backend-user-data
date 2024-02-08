@@ -3,7 +3,7 @@
 from typing import List, Match, Optional
 import re
 import logging
-import mysql.connector
+from mysql.connector import connection
 import os
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -53,15 +53,15 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
-    '''methode that return mysql connector'''
-
-    user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
-    local = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    database = os.getenv('PERSONAL_DATA_DB_NAME',)
-    connex = mysql.connector.MySQLConnection(user=user,
-                                             password=passwd,
-                                             host=local,
-                                             database=database)
-    return connex
+def get_db() -> connection.MySQLConnection:
+    """returns a connector to the database"""
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    return connection.MySQLConnection(
+        host=host,
+        username=username,
+        password=password,
+        database=db_name
+    )
