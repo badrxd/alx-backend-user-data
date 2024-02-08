@@ -65,3 +65,23 @@ def get_db() -> connection.MySQLConnection:
         password=db_password,
         database=db_name
     )
+
+
+def main() -> None:
+    '''fucntion'''
+    logger = get_logger()
+    db_connex = get_db()
+    cursor = db_connex.cursor()
+    cursor.execute("SELECT * FROM users;")
+    fields = cursor.column_names
+    for cu in cursor.fetchall():
+        text = ""
+        for i in range(len(cu)):
+            text += "{}={};".format(fields[i], cu[i])
+        logger.info(msg=text)
+    cursor.close()
+    db_connex.close()
+
+
+if __name__ == "__main__":
+    main()
