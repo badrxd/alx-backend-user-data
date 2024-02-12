@@ -21,6 +21,7 @@ if getenv('AUTH_TYPE'):
 
 @app.before_request
 def before_request():
+    '''function that validate all requests to secure the API:'''
     if auth is None:
         pass
     else:
