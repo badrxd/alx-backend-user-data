@@ -8,3 +8,11 @@ class BasicAuth(Auth):
 
     def __init__(self) -> None:
         pass
+
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+        ''''''
+        if (not authorization_header or
+                type(authorization_header) is not str
+                or not authorization_header.startswith('Basic ')):
+            return None
+        return authorization_header.split(" ")[1]
