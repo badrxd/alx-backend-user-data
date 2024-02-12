@@ -9,7 +9,8 @@ class BasicAuth(Auth):
     def __init__(self) -> None:
         pass
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, authorization_header: str
+                                            ) -> str:
         '''return the value after Basic : key'''
         if (not authorization_header or
                 type(authorization_header) is not str
