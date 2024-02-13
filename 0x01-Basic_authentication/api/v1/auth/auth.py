@@ -2,6 +2,7 @@
 '''authentication file'''
 from flask import request
 from typing import List,  TypeVar
+import fnmatch
 
 
 class Auth():
@@ -16,10 +17,10 @@ class Auth():
         if path[-1] != "/":
             path = path+"/"
 
-        if path in excluded_paths:
-            return False
-        else:
-            return True
+        for pattern in excluded_paths:
+            if fnmatch.fnmatch(path, pattern):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         '''return None'''

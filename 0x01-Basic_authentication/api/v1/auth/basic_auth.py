@@ -33,9 +33,9 @@ class BasicAuth(Auth):
         key = ''
         try:
             key = base64.b64decode(base64_authorization_header)
+            return key.decode('utf-8')
         except Exception:
             return None
-        return key.decode('utf-8')
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
@@ -47,9 +47,11 @@ class BasicAuth(Auth):
             return (None, None)
         credentials = decoded_base64_authorization_header.split(":")
 
-        if len(credentials) != 2:
+        if len(credentials) < 2:
             return (None, None)
-        return tuple(credentials)
+        email = credentials[0]
+        passwd = decoded_base64_authorization_header[len(email)+1:]
+        return (email, passwd)
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
