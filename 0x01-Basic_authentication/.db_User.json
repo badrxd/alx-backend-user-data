@@ -1,1 +1,11 @@
-{"7b43266d-5787-48d6-a57e-3ba671b64a92": {"id": "7b43266d-5787-48d6-a57e-3ba671b64a92", "created_at": "2024-02-13T20:07:21", "updated_at": "2024-02-13T20:07:21", "email": "aef4b4f6-e6b8-4999-ba16-f0824d9931a5", "_password": "539dad0c346a500cec1f2fbaf9a10974a3cf0de2ee5f5322dc9aecca11a9afa6", "first_name": "Bob", "last_name": "Dylan"}}
+{
+    "86704802-334d-44c4-bc42-cc5e6bdf7303": {
+        "id": "86704802-334d-44c4-bc42-cc5e6bdf7303",
+        "created_at": "2024-02-13T20:46:53",
+        "updated_at": "2024-02-13T20:46:53",
+        "email": "bob@hbtn.io",
+        "_password": "a5c904771b8617de27d3511d1f538094e26c120da663363b3f760f7b894f9d69",
+        "first_name": null,
+        "last_name": null
+    }
+}

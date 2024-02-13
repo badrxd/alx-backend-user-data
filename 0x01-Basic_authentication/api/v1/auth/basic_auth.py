@@ -5,6 +5,7 @@ from models.base import Base
 from models.user import User
 import base64
 from typing import TypeVar
+from flask import request, abort
 
 
 class BasicAuth(Auth):
@@ -63,3 +64,22 @@ class BasicAuth(Auth):
         if user[0].is_valid_password(user_pwd) is False:
             return None
         return user[0]
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        '''return user if he is authorized and authenticated
+        otherwise rise http error 403
+        '''
+        token = self.extract_base64_authorization_header(
+            request.headers.get('Authorization'))
+        if token is None:
+            return None
+        valid_token = self.decode_base64_authorization_header(token)
+        if valid_token is None:
+            return None
+        user_credentials = self.extract_user_credentials(valid_token)
+        user = self.user_object_from_credentials(
+            user_credentials[0], user_credentials[1])
+        if user is None:
+            return None
+
+        return user
