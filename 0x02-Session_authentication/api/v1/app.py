@@ -38,14 +38,13 @@ def before_request():
         path = request.path
         need_to_be_auth = auth.require_auth(path, excluded_paths)
         if need_to_be_auth:
-            if not auth.authorization_header(request):
+            if (not auth.authorization_header(request) and
+                    not auth.session_cookie(request)):
                 abort(401)
             current_user = auth.current_user(request)
             if not current_user:
                 abort(403)
             request.current_user = current_user
-            if not auth.session_cookie(request):
-                abort(401)
 
 
 @app.errorhandler(403)
