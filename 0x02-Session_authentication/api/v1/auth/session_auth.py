@@ -12,7 +12,6 @@ class SessionAuth(Auth):
 
     def create_session(self, user_id: str = None) -> str:
         '''methode that creates a Session ID for a user_id'''
-
         if not user_id or type(user_id) is not str:
             return None
         session_id = str(uuid.uuid4())
