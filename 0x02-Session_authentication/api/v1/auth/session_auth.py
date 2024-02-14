@@ -6,9 +6,7 @@ import uuid
 
 class SessionAuth(Auth):
     '''SessionAuth class'''
-
-    def __init__(self) -> None:
-        self.user_id_by_session_id = {}
+    user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
         '''methode that creates a Session ID for a user_id'''
