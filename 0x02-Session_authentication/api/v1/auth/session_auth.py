@@ -40,3 +40,4 @@ class SessionAuth(Auth):
         if not self.user_id_for_session_id(session_id):
             return False
         self.user_id_by_session_id.pop(session_id)
+        return True
