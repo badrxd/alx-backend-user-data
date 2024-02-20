@@ -47,13 +47,14 @@ class DB:
 
     def find_user_by(self, **kwargs: Any) -> User:
         """Find user"""
-        try:
-            user = self.__session.query(User).filter_by(**kwargs).first()
-            if not user:
-                raise NoResultFound
-            return user
-        except InvalidRequestError as e:
-            raise e
+        all_users = self._session.query(User)
+        for key, value in kwargs.items():
+            if key not in User.__dict__:
+                raise InvalidRequestError
+            for user in all_users:
+                if getattr(user, key) == value:
+                    return user
+        raise NoResultFound
 
     def update_user(self, id: int, **kwargs: Any) -> None:
         """update use inforamtions"""
