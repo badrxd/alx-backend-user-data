@@ -69,7 +69,7 @@ def logout():
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile():
-    """ GET /sessions
+    """ GET /profile
     Return:
       - json
     """
@@ -78,6 +78,20 @@ def profile():
     if user is None:
         abort(403)
     return jsonify({"email": f"{user.email}"}), 200
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token():
+    """ POST /reset_password
+    Return:
+      - json or raise HTTPException 403
+    """
+    email = request.form.get('email')
+    try:
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": f"{email}", "reset_token": f"{token}"}), 200
+    except ValueError:
+        abort(403)
 
 
 if __name__ == "__main__":
