@@ -56,17 +56,17 @@ class DB:
         except InvalidRequestError as e:
             raise e
 
-    def update_user(self, id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """update use inforamtions
         """
         try:
-            user = self.find_user_by(id=id)
-            for key, val in kwargs.items():
-                if hasattr(user, key):
-                    setattr(user, key, val)
-                else:
-                    raise ValueError
-            self.__session.commit()
-            return None
-        except Exception as e:
-            raise e
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError
+        for key, val in kwargs.items():
+            if hasattr(user, key):
+                setattr(user, key, val)
+            else:
+                raise ValueError
+        self.__session.commit()
+        return None
