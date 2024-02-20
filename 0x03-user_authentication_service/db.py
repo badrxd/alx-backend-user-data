@@ -48,6 +48,8 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """Find user
         """
+        if self.__session is None:
+            self._session
         try:
             user = self.__session.query(User).filter_by(**kwargs).first()
             if not user:
