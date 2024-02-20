@@ -43,7 +43,6 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
     login_status = AUTH.valid_login(email, password)
-    print(login_status)
     if login_status is False:
         abort(401)
     session_id = AUTH.create_session(email)
