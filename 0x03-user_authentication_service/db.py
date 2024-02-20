@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-from typing import Any
+from typing import List
 from user import Base, User
 
 
@@ -72,3 +72,9 @@ class DB:
                 raise ValueError
         self.__session.commit()
         return None
+
+    def get_all(self) -> List[User]:
+        """"""
+        if self.__session is None:
+            self._session
+        return self.__session.query(User).all()
