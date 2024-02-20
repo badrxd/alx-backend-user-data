@@ -72,9 +72,3 @@ class DB:
                 raise ValueError
         self.__session.commit()
         return None
-
-    def get_all(self) -> List[User]:
-        """"""
-        if self.__session is None:
-            self._session
-        return self.__session.query(User).all()
