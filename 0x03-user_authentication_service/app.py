@@ -2,7 +2,7 @@
 """
 Route module for the project
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
 
 app = Flask(__name__)
@@ -30,6 +30,26 @@ def users():
         return jsonify({"email": f"{email}", "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
+
+
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login():
+    """ POST /sessions
+    Job:
+      - validate user login, and set session id as a coockies
+    Return:
+      - json
+    """
+    email = request.form.get('email')
+    password = request.form.get('password')
+    login_status = AUTH.valid_login(email, password)
+    print(login_status)
+    if login_status is False:
+        abort(401)
+    session_id = AUTH.create_session(email)
+    out = jsonify({"email": f"<{email}", "message": "logged in"})
+    out.set_cookie("session_id", session_id)
+    return out
 
 
 if __name__ == "__main__":
