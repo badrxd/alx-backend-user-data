@@ -15,7 +15,7 @@ def _hash_password(password: str) -> bytes:
 def _generate_uuid() -> str:
     """methode return a string representation of a new UUID"""
     new_uuid = uuid4()
-    return new_uuid.__str__
+    return str(new_uuid)
 
 
 class Auth:
