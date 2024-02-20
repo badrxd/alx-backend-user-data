@@ -46,7 +46,8 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """Find user"""
+        """Find user
+        """
         try:
             user = self.__session.query(User).filter_by(**kwargs).first()
             if not user:
@@ -55,8 +56,9 @@ class DB:
         except InvalidRequestError as e:
             raise e
 
-    def update_user(self, id: int, **kwargs: Any) -> None:
-        """update use inforamtions"""
+    def update_user(self, id: int, **kwargs) -> None:
+        """update use inforamtions
+        """
         try:
             user = self.find_user_by(id=id)
             for key, val in kwargs.items():
